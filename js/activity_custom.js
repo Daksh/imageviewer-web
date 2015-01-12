@@ -2,6 +2,17 @@ var zoom = 100;
 var rot = 0;
 
 $(document).ready(function() {
+    var image = document.getElementById('principal-image');
+    var canvas = document.getElementById('myCanvas');
+    var choose = document.getElementById('init-image');
+
+    if(!canvas || !canvas.getContext){
+      canvas.parentNode.removeChild(canvas);
+    } else {
+      image.style.position = 'absolute';
+      image.style.visibility = 'hidden';
+    }
+
     $("#unfullscreen").hide();
 
     $("#zoom-in").click(function() {
@@ -25,29 +36,7 @@ $(document).ready(function() {
         if (rot < 0) {
           rot = 270
         };
-
-        if (rot == 0) {
-            $("#principal-image").css('-webkit-transform', 'rotate(0deg)')
-            $("#principal-image").css('-moz-transform', 'rotate(0deg)')
-            $("#principal-image").css('filter', 'progid:DXImageTransform.Microsoft.BasicImage(rotation=0)')
-        };
-
-        if (rot == 90) {
-            $("#principal-image").css('-webkit-transform', 'rotate(90deg)')
-            $("#principal-image").css('-moz-transform', 'rotate(90deg)')
-            $("#principal-image").css('filter', 'progid:DXImageTransform.Microsoft.BasicImage(rotation=1)')
-        };
-        if (rot == 180) {
-            $("#principal-image").css('-webkit-transform', 'rotate(180deg)')
-            $("#principal-image").css('-moz-transform', 'rotate(180deg)')
-            $("#principal-image").css('filter', 'progid:DXImageTransform.Microsoft.BasicImage(rotation=2)')
-        };
-        if (rot == 270) {
-            $("#principal-image").css('-webkit-transform', 'rotate(270deg)')
-            $("#principal-image").css('-moz-transform', 'rotate(270deg)')
-            $("#principal-image").css('filter', 'progid:DXImageTransform.Microsoft.BasicImage(rotation=3)')
-        };
-
+        rotateImage(rot);
     });
 
     $("#rotate_clockwise").click(function() {
@@ -55,31 +44,37 @@ $(document).ready(function() {
         if (rot > 270) {
           rot = 0
         };
-
-        if (rot == 0) {
-            $("#principal-image").css('-webkit-transform', 'rotate(0deg)')
-            $("#principal-image").css('-moz-transform', 'rotate(0deg)')
-            $("#principal-image").css('filter', 'progid:DXImageTransform.Microsoft.BasicImage(rotation=0)')
-        };
-
-        if (rot == 90) {
-            $("#principal-image").css('-webkit-transform', 'rotate(90deg)')
-            $("#principal-image").css('-moz-transform', 'rotate(90deg)')
-            $("#principal-image").css('filter', 'progid:DXImageTransform.Microsoft.BasicImage(rotation=1)')
-        };
-        if (rot == 180) {
-            $("#principal-image").css('-webkit-transform', 'rotate(180deg)')
-            $("#principal-image").css('-moz-transform', 'rotate(180deg)')
-            $("#principal-image").css('filter', 'progid:DXImageTransform.Microsoft.BasicImage(rotation=2)')
-        };
-        if (rot == 270) {
-            $("#principal-image").css('-webkit-transform', 'rotate(270deg)')
-            $("#principal-image").css('-moz-transform', 'rotate(270deg)')
-            $("#principal-image").css('filter', 'progid:DXImageTransform.Microsoft.BasicImage(rotation=3)')
-
-        };
-
+        rotateImage(rot);
     });
+
+    function rotateImage(degree) {
+      var cContext = canvas.getContext('2d');
+      var cw = image.width, ch = image.height, cx = 0, cy = 0;
+
+      //   Calculate new canvas size and x/y coorditates for image
+      switch(rot){
+        case 90:
+          cw = image.height;
+          ch = image.width;
+          cy = image.height * (-1);
+          break;
+        case 180:
+          cx = image.width * (-1);
+          cy = image.height * (-1);
+          break;
+        case 270:
+          cw = image.height;
+          ch = image.width;
+          cx = image.width * (-1);
+          break;
+        }
+
+      //  Rotate image
+      canvas.setAttribute('width', cw);
+      canvas.setAttribute('height', ch);
+      cContext.rotate(degree * Math.PI / 180);
+      cContext.drawImage(image, cx, cy);
+      }
 
     $("#fullscreen").click(function() {
         console.log("Switching to fullscreen");
@@ -110,9 +105,10 @@ $(document).ready(function() {
           var reader = new FileReader();
           reader.onload = function(e) {
             var imageSrc = reader.result;
-            document.getElementById('init-image').style.display = 'none';
-            $("#principal-image").css('z-index', '1')
-            document.getElementById('principal-image').src = imageSrc;
+            choose.style.display = 'none';
+            canvas.style.zIndex = 1;
+            image.src = imageSrc;
+            rotateImage(0);
           }
           reader.readAsDataURL(file);
         }

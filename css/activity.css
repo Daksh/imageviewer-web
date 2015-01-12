@@ -68,3 +68,8 @@
 #search_image {
   display: none;
 }
+
+#myCanvas {
+  ext-align:center;
+  display:block;
+}
