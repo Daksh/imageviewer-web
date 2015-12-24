@@ -148,11 +148,10 @@ $(document).ready(function() {
 
         if (file.type.match(imageType)) {
             var reader = new FileReader();
-            reader.onload = function(e) {
-            var imageSrc = reader.result;
-
             var dimg = new Image;
-            dimg.src = imageSrc;
+            var imageSrc;
+            reader.onload = function(e) {
+            imageSrc = reader.result;
 
             choose.css('display', 'none');
             image.attr('src', imageSrc);
@@ -170,6 +169,7 @@ $(document).ready(function() {
             oHeight = image.height(); 
             //$('#myCanvas').remove();
           }
+          dimg.src = imageSrc;
           reader.readAsDataURL(file);
         }
       });
