@@ -1,27 +1,36 @@
 var zoom = 100;
 var rot = 0;
+var iWidth = 0, iHeight = 0;
 
 $(document).ready(function() {
-    //var image = document.getElementById('principal-image');
     var image = $('#principal-image');
-    //var canvas = document.getElementById('myCanvas');
     canvas = $('#myCanvas');
-    //var choose = document.getElementById('init-image');
     var choose = $('#init-image');
 
-    //image.style.position = 'absolute';
-    //image.style.visibility = 'hidden';
     image.css('position', 'relative');
-    //image.css('visibility', 'hidden');
 
     $("#unfullscreen").hide();
 
     $("#zoom-in").click(function() {
         console.log("Zoom-In");
+        var resize = 140; // resize amount in percentage
+        var newH   = iHeight * (resize / 100);
+        var newW   = iWidth * (resize / 100);
+        image.css('height', newH);
+        image.css('width', newW);
+        iWidth = newW;
+        iHeight = newH;
     });
 
     $("#zoom-out").click(function() {
         console.log("Zoom-Out");
+        var resize = 140; // resize amount in percentage
+        var newH   = iHeight / (resize / 100);
+        var newW   = iWidth / (resize / 100);
+        image.css('height', newH);
+        image.css('width', newW);
+        iWidth = newW;
+        iHeight = newH;
     });
 
     $("#zoom-best").click(function() {
@@ -109,8 +118,8 @@ $(document).ready(function() {
             choose.css('display', 'none');
             image.attr("src", imageSrc);
             image.css('display', '');
-            origWidth = image.width();
-            origHeight = image.height();
+            iWidth = image.width();
+            iHeight = image.height();
             $('#myCanvas').remove();
           }
           reader.readAsDataURL(file);
