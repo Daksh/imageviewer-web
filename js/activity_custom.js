@@ -88,8 +88,6 @@ $(document).ready(function() {
     });
 
     function rotateImage(degree) {
-      //var cContext = canvas.getContext('2d'); //moved to global
-      //var cw = image[0].width, ch = image[0].height, cx = 0, cy = 0;
       var cw = iWidth, ch = iHeight, cx = 0, cy = 0;
 
       cContext.clearRect(0, 0, iWidth, iHeight);
