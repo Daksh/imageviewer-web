@@ -17,35 +17,32 @@ $(document).ready(function() {
 
     $("#zoom-in").click(function() {
         console.log("Zoom-In");
-        /*var resize = 140; // resize amount in percentage
+        cContext.clearRect(0, 0, iWidth, iHeight);
+        var resize = 140; // resize amount in percentage
         var newH   = iHeight * (resize / 100);
         var newW   = iWidth * (resize / 100);
-        image.css('height', newH);
-        image.css('width', newW);
         iWidth = newW;
-        iHeight = newH;*/
+        iHeight = newH;
 
-        //cContext.scale(1.2,1.2);
-        //canvas.setAttribute('width', image[0].width*1.2);
-        //canvas.setAttribute('height', image[0].height*1.2);
-        cContext.drawImage(image[0], 0,0,image[0].width*1.2, image[0].height*1.2);
+        cContext.drawImage(image[0], 0,0,newW, newH);
     });
 
     $("#zoom-out").click(function() {
         console.log("Zoom-Out");
+        cContext.clearRect(0, 0, iWidth, iHeight);
         var resize = 140; // resize amount in percentage
         var newH   = iHeight / (resize / 100);
         var newW   = iWidth / (resize / 100);
-        image.css('height', newH);
-        image.css('width', newW);
         iWidth = newW;
         iHeight = newH;
+        cContext.drawImage(image[0], 0,0,newW, newH);
     });
 
     $("#zoom-best").click(function() {
         console.log("Zoom-Best");
-        image.css('width', '100%');
-        image.css('height', '100%');
+        //image.css('width', '100%');
+        //image.css('height', '100%');
+        cContext.drawImage(image[0], 0,0,'100%', '100%');
     });
 
     $("#zoom-original").click(function() {
