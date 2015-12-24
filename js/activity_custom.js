@@ -2,16 +2,17 @@ var zoom = 100;
 var rot = 0;
 
 $(document).ready(function() {
-    var image = document.getElementById('principal-image');
-    var canvas = document.getElementById('myCanvas');
-    var choose = document.getElementById('init-image');
+    //var image = document.getElementById('principal-image');
+    var image = $('#principal-image');
+    //var canvas = document.getElementById('myCanvas');
+    canvas = $('#myCanvas');
+    //var choose = document.getElementById('init-image');
+    var choose = $('#init-image');
 
-    if(!canvas || !canvas.getContext){
-      canvas.parentNode.removeChild(canvas);
-    } else {
-      image.style.position = 'absolute';
-      image.style.visibility = 'hidden';
-    }
+    //image.style.position = 'absolute';
+    //image.style.visibility = 'hidden';
+    image.css('position', 'relative');
+    //image.css('visibility', 'hidden');
 
     $("#unfullscreen").hide();
 
@@ -102,13 +103,15 @@ $(document).ready(function() {
       fileInput.addEventListener('change', function(e) {
         var file = fileInput.files[0];
         if (file.type.match(imageType)) {
-          var reader = new FileReader();
-          reader.onload = function(e) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
             var imageSrc = reader.result;
-            choose.style.display = 'none';
-            canvas.style.zIndex = 1;
-            image.src = imageSrc;
-            rotateImage(0);
+            choose.css('display', 'none');
+            image.attr("src", imageSrc);
+            image.css('display', '');
+            origWidth = image.width();
+            origHeight = image.height();
+            $('#myCanvas').remove();
           }
           reader.readAsDataURL(file);
         }
