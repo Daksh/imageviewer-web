@@ -24,6 +24,8 @@ $(document).ready(function() {
         iWidth = newW;
         iHeight = newH;
 
+        canvas.setAttribute('width', newW);
+        canvas.setAttribute('height', newH);
         cContext.drawImage(image[0], 0,0,newW, newH);
     });
 
@@ -35,6 +37,8 @@ $(document).ready(function() {
         var newW   = iWidth / (resize / 100);
         iWidth = newW;
         iHeight = newH;
+        canvas.setAttribute('width', newW);
+        canvas.setAttribute('height', newH);
         cContext.drawImage(image[0], 0,0,newW, newH);
     });
 
@@ -42,13 +46,16 @@ $(document).ready(function() {
         console.log("Zoom-Best");
         //image.css('width', '100%');
         //image.css('height', '100%');
-        cContext.drawImage(image[0], 0,0,'100%', '100%');
+        
+        //cContext.drawImage(image[0], 0,0,'100%', '100%');
     });
 
     $("#zoom-original").click(function() {
         console.log("Zoom-Original");
-        image.css('width', oWidth);
-        image.css('height', oHeight);
+        //image.css('width', oWidth);
+        //image.css('height', oHeight);
+        cContext.clearRect(0, 0, iWidth, iHeight);
+        cContext.drawImage(image[0], 0,0,oWidth, oHeight);
     });
 
     $("#rotate_anticlockwise").click(function() {
