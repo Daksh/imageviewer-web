@@ -7,7 +7,7 @@ $(document).ready(function() {
     var image = $('#principal-image');
     var canvas = document.getElementById("myCanvas");
     var choose = $('#init-image');
-    var cContext = canvas.getContext('2d');
+    var cContext;
 
     image.css('position', 'relative');
 
@@ -168,6 +168,7 @@ $(document).ready(function() {
             //$('#myCanvas').remove();
           }
           dimg.src = imageSrc;
+          cContext = canvas.getContext('2d')
           reader.readAsDataURL(file);
         }
       });
