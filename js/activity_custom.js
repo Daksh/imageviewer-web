@@ -1,6 +1,7 @@
 var zoom = 100;
 var rot = 0;
 var iWidth = 0, iHeight = 0;
+var oWidth = 0, oHeight = 0;
 
 $(document).ready(function() {
     var image = $('#principal-image');
@@ -35,10 +36,14 @@ $(document).ready(function() {
 
     $("#zoom-best").click(function() {
         console.log("Zoom-Best");
+        image.css('width', '100%');
+        image.css('height', '100%');
     });
 
     $("#zoom-original").click(function() {
         console.log("Zoom-Original");
+        image.css('width', oWidth);
+        image.css('height', oHeight);
     });
 
     $("#rotate_anticlockwise").click(function() {
@@ -120,6 +125,8 @@ $(document).ready(function() {
             image.css('display', '');
             iWidth = image.width();
             iHeight = image.height();
+            oWidth = image.width();
+            oHeight = image.height();
             $('#myCanvas').remove();
           }
           reader.readAsDataURL(file);
