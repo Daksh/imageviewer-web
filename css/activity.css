@@ -58,12 +58,13 @@
 }
 
 #init-image {
-  margin-top: 18%;
+  margin-top: 5%;
 }
 
 #init-image img {
   width: 15%;
 }
+
 
 #search_image {
   display: none;
