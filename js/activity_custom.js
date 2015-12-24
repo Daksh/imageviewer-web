@@ -5,9 +5,7 @@ var oWidth = 0, oHeight = 0;
 
 $(document).ready(function() {
     var image = $('#principal-image');
-    //canvas = $('#myCanvas');
     var canvas = document.getElementById("myCanvas");
-    //var image_for_canvas = document.getElementById("principal-image");
     var choose = $('#init-image');
     var cContext = canvas.getContext('2d');
 
@@ -44,17 +42,32 @@ $(document).ready(function() {
 
     $("#zoom-best").click(function() {
         console.log("Zoom-Best");
-        //image.css('width', '100%');
-        //image.css('height', '100%');
+        var ratio = oHeight/oWidth;
+        var ratio2 = oWidth/oHeight;
         
-        //cContext.drawImage(image[0], 0,0,'100%', '100%');
+        var sWidth=$(document).width();
+        var sHeight=$(document).height();
+
+        if ( sWidth*ratio < sHeight ) {
+          canvas.setAttribute('width', sWidth);
+          canvas.setAttribute('height', sWidth*ratio);
+          cContext.drawImage(image[0], 0,0,sWidth, sWidth*ratio);
+          iWidth=sWidth;
+          iHeight=sWidth*ratio;
+        } else{
+          canvas.setAttribute('width', sHeight*ratio2);
+          canvas.setAttribute('height', sHeight);
+          cContext.drawImage(image[0], 0,0,sHeight*ratio2, sHeight);
+          iWidth=sHeight*ratio2;
+          iHeight=sHeight;
+        };
     });
 
     $("#zoom-original").click(function() {
         console.log("Zoom-Original");
-        //image.css('width', oWidth);
-        //image.css('height', oHeight);
         cContext.clearRect(0, 0, iWidth, iHeight);
+        canvas.setAttribute('width', oWidth);
+        canvas.setAttribute('height', oHeight);
         cContext.drawImage(image[0], 0,0,oWidth, oHeight);
     });
 
