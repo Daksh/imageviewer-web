@@ -89,23 +89,26 @@ $(document).ready(function() {
 
     function rotateImage(degree) {
       //var cContext = canvas.getContext('2d'); //moved to global
-      var cw = image[0].width, ch = image[0].height, cx = 0, cy = 0;
+      //var cw = image[0].width, ch = image[0].height, cx = 0, cy = 0;
+      var cw = iWidth, ch = iHeight, cx = 0, cy = 0;
+
+      cContext.clearRect(0, 0, iWidth, iHeight);
 
       //   Calculate new canvas size and x/y coorditates for image
       switch(rot){
         case 90:
-          cw = image[0].height;
-          ch = image[0].width;
-          cy = image[0].height * (-1);
+          cw = iHeight;
+          ch = iWidth;
+          cy = iHeight * (-1);
           break;
         case 180:
-          cx = image[0].width * (-1);
-          cy = image[0].height * (-1);
+          cx = iWidth * (-1);
+          cy = iHeight * (-1);
           break;
         case 270:
-          cw = image[0].height;
-          ch = image[0].width;
-          cx = image[0].width * (-1);
+          cw = iHeight;
+          ch = iWidth;
+          cx = iWidth * (-1);
           break;
         }
 
@@ -113,7 +116,8 @@ $(document).ready(function() {
       canvas.setAttribute('width', cw);
       canvas.setAttribute('height', ch);
       cContext.rotate(degree * Math.PI / 180);
-      cContext.drawImage(image[0], cx, cy);
+      cContext.drawImage(image[0], cx, cy, cw, ch);
+      //cContext.drawImage(image[0], 0, 0, iWidth, iHeight);
       }
 
     $("#fullscreen").click(function() {
